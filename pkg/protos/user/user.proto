@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/sumit-tembe/grpc-svc/pkg/grpc/user";
+
+
+message User {
+  int64 id = 1;
+  string name = 2;
+}
+
+message GetUsersRequest {
+  repeated int64 ids = 1;
+}
+
+message GetUsersResponse {
+  repeated User users = 1;
+}
+
+
+service Users {
+  rpc GetUsers (GetUsersRequest) returns (GetUsersResponse) {}
+}
