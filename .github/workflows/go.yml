@@ -24,5 +24,14 @@ jobs:
         repository: sumit-tembe/builds
         path: './builds'
 
+    - name: Install dependencies
+      run: |
+        apt install -y protobuf-compiler
+        protoc --version  # Ensure compiler version is 3+
+        pushd /tmp
+        go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+        popd
+
     - name: Build
       run: ./builds/scripts/go/build.sh && make proto
