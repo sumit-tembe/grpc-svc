@@ -10,23 +10,22 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/sirupsen/logrus"
-	pb "github.com/sumit-tembe/grpc-svc/pkg/grpc/user"
-	logger "github.com/sumit-tembe/grpc-svc/pkg/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
+
+	pb "github.com/sumit-tembe/grpc-svc/pkg/grpc/user"
+	logger "github.com/sumit-tembe/grpc-svc/pkg/log"
 )
 
-var (
-	customFunc = func(code codes.Code) logrus.Level {
-		switch code {
-		case codes.OK:
-			return logrus.InfoLevel
-		default:
-			return logrus.ErrorLevel
-		}
+var customFunc = func(code codes.Code) logrus.Level {
+	switch code {
+	case codes.OK:
+		return logrus.InfoLevel
+	default:
+		return logrus.ErrorLevel
 	}
-)
+}
 
 type server struct {
 	pb.UnimplementedUsersServer
@@ -39,7 +38,6 @@ func (s *server) GetUsers(ctx context.Context, in *pb.GetUsersRequest) (*pb.GetU
 }
 
 func main() {
-
 	errChan := make(chan error)
 	stopChan := make(chan os.Signal, 1)
 	// bind OS events to the signal channel

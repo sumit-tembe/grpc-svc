@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/sumit-tembe/grpc-svc/pkg/grpc/user"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+
+	pb "github.com/sumit-tembe/grpc-svc/pkg/grpc/user"
 )
 
 type usersClient struct {
@@ -13,8 +15,7 @@ type usersClient struct {
 }
 
 func initUsersClient(url string) usersClient {
-	cc, err := grpc.Dial(url, grpc.WithInsecure())
-
+	cc, err := grpc.Dial(url, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		fmt.Println("Could not connect:", err)
 	}
